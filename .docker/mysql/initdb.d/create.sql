@@ -1,2 +1,2 @@
-// テーブル作成
+USE db;
 CREATE TABLE IF NOT EXISTS db.list (id VARCHAR(255) NOT NULL);
