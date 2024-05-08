@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  web:
+    image: "php:8.3-apache"
+    ports:
+      - "80:80"
+    volumes:
+      - "./html/:/var/www/html"
+  abunai-web:
+    image: "php:8.3-apache"
+    ports:
+      - "8080:80"
+    volumes:
+      - "./abunai/:/var/www/html"
+    command: >
+      sh -c "docker-php-ext-install pdo_mysql ;
+      apache2-foreground"
+    stdin_open: true
+    tty: true
+  db:
+    image: "mysql:8.0"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: "Asia/Tokyo"
+    volumes:
+      - ./crate.sql:/docker-entrypoint-initdb.d/crate.sql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
